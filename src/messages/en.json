@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "brand": "BLUSTEREAST",
+    "home": "Home",
+    "about": "About Us",
+    "artists": "Artists",
+    "services": "Services",
+    "gallery": "Flash Gallery",
+    "contact": "Contact & Location",
+    "admin": "Studio Admin",
+    "whatsappCta": "WhatsApp Consultation"
+  },
+  "hero": {
+    "badge": "BALI TATTOO STUDIO",
+    "title": "CUSTOM TATTOO & FINE LINE STUDIO",
+    "subtitle": "Specializing in Fine Line, Blackwork, and Custom Designs in East Denpasar, Bali. Prioritizing Hygiene and Comfort.",
+    "ctaWhatsapp": "Consult via WhatsApp",
+    "ctaGallery": "View Work Gallery"
+  },
+  "home": {
+    "servicesTitle": "CORE STUDIO SERVICES",
+    "servicesSubtitle": "Exclusive designs tailored to your concept and body placement.",
+    "servicesViewAll": "View All Services & Pricing",
+    "featuredWorksTitle": "FEATURED WORKS & FLASH",
+    "featuredWorksSubtitle": "Latest custom tattoos and linework flash from our resident artists.",
+    "featuredWorksViewAll": "Explore Full Gallery",
+    "artistsTitle": "RESIDENT ARTISTS",
+    "artistsSubtitle": "Experienced tattoo artists each with unique style and precision.",
+    "artistsViewAll": "View Artist Profiles",
+    "contactCtaTitle": "READY FOR YOUR NEXT PIECE?",
+    "contactCtaSubtitle": "Discuss your tattoo idea, size, and placement directly with our team on WhatsApp.",
+    "contactCtaButton": "Free WhatsApp Consultation"
+  },
+  "about": {
+    "title": "ABOUT BLUSTEREAST TATTOO",
+    "subtitle": "Professional custom tattoo studio located in East Denpasar, Bali.",
+    "storyTitle": "Studio Story",
+    "storyBody": "Blustereast Tattoo Studio was established with a commitment to delivering high-quality custom tattoo art. Every piece is crafted under medical-grade hygiene standards, single-use needles, and internationally certified inks. We believe a tattoo is a lasting personal expression.",
+    "visionTitle": "Our Vision",
+    "visionBody": "To be a benchmark custom tattoo studio in Bali recognized for line precision, clean workspace, and a safe, comfortable client experience.",
+    "missionTitle": "Our Mission",
+    "missionBody": "1. Provide transparent and friendly custom design consultations.\n2. Maintain strict hygiene and sterilization protocols without compromise.\n3. Educate clients thoroughly on tattoo aftercare.",
+    "valuesTitle": "Our Core Values",
+    "valHygieneTitle": "Medical Hygiene",
+    "valHygieneDesc": "Sterile single-use needles, equipment barrier film, and regular room disinfection.",
+    "valComfortTitle": "Client Comfort",
+    "valComfortDesc": "Calm atmosphere, beginner-friendly, and fully transparent about the process.",
+    "valCustomTitle": "Original Design",
+    "valCustomDesc": "We don't just copy; we redraft and adapt artwork to fit your body anatomy.",
+    "photosTitle": "Studio Atmosphere"
+  },
+  "artists": {
+    "title": "RESIDENT TATTOO ARTISTS",
+    "subtitle": "Each artist brings their own distinctive style and craft.",
+    "specialties": "Specialties",
+    "bio": "Profile & Style",
+    "viewGallery": "View Works by This Artist"
+  },
+  "services": {
+    "title": "SERVICES & PRICING ESTIMATES",
+    "subtitle": "Final price depends on precise dimensions, line detail, and placement complexity.",
+    "startingFrom": "Starting from",
+    "priceNote": "*Prices above are initial estimates. Consult your design details for an exact quote.",
+    "faqTitle": "FREQUENTLY ASKED QUESTIONS (FAQ)",
+    "aftercareTitle": "TATTOO AFTERCARE GUIDE",
+    "aftercareIntro": "Proper aftercare ensures ink sharpness and smooth healing."
+  },
+  "gallery": {
+    "title": "WORK GALLERY & FLASH SHEETS",
+    "subtitle": "Collection of studio tattoos and stencil flash sheets.",
+    "filterAllStyle": "All Styles",
+    "filterAllArtist": "All Artists",
+    "artistLabel": "Artist",
+    "styleLabel": "Style",
+    "viewDetail": "View Details",
+    "lightboxTitle": "Work Details",
+    "lightboxConsult": "Consult Similar Tattoo via WhatsApp"
+  },
+  "contact": {
+    "title": "CONTACT & STUDIO LOCATION",
+    "subtitle": "Visit our studio or submit a consultation request below.",
+    "addressTitle": "Studio Address",
+    "hoursTitle": "Opening Hours",
+    "socialsTitle": "Social Media",
+    "mapTitle": "Studio Location Map",
+    "formTitle": "Tattoo Consultation Form",
+    "formName": "Full Name",
+    "formPhone": "WhatsApp / Phone Number",
+    "formStyle": "Tattoo Style (e.g. Fine Line, Blackwork)",
+    "formPlacement": "Placement (e.g. Upper Arm, Chest)",
+    "formSize": "Estimated Size (e.g. 5x5 cm, Full Sleeve)",
+    "formMessage": "Message / Tattoo Concept Idea",
+    "formSubmit": "Submit Consultation Request",
+    "formSuccess": "Thank you! Your inquiry has been submitted. Our team will contact you shortly.",
+    "formWhatsAppAlt": "Want a faster response? WhatsApp us directly:"
+  },
+  "ageNotice": {
+    "title": "18+ Age Requirement",
+    "message": "Our studio only serves clients aged 18 and above. Please present ID upon visit.",
+    "dismiss": "I Understand (18+)"
+  },
+  "footer": {
+    "aboutText": "Professional custom tattoo studio in East Denpasar, Bali. Strictly 18+ clients.",
+    "quickLinks": "Quick Links",
+    "socialTitle": "Follow Us",
+    "copyright": "© 2026 Blustereast Tattoo Studio. All Rights Reserved."
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "brand": "BLUSTEREAST",
+    "home": "Beranda",
+    "about": "Tentang Kami",
+    "artists": "Seniman",
+    "services": "Layanan",
+    "gallery": "Galeri Flash",
+    "contact": "Kontak & Lokasi",
+    "admin": "Admin Studio",
+    "whatsappCta": "Konsultasi WhatsApp"
+  },
+  "hero": {
+    "badge": "STUDIO TATTO BALI",
+    "title": "CUSTOM TATTOO & FINE LINE STUDIO",
+    "subtitle": "Spesialis Fine Line, Blackwork, dan Desain Custom di Denpasar Timur, Bali. Mengutamakan Higienitas dan Kenyamanan.",
+    "ctaWhatsapp": "Konsultasi WhatsApp",
+    "ctaGallery": "Lihat Galeri Karya"
+  },
+  "home": {
+    "servicesTitle": "LAYANAN UTAMA STUDIO",
+    "servicesSubtitle": "Desain eksklusif disesuaikan dengan konsep dan bentuk tubuh Anda.",
+    "servicesViewAll": "Lihat Semua Layanan & Harga",
+    "featuredWorksTitle": "KARYA TERPILIH & FLASH",
+    "featuredWorksSubtitle": "Koleksi tato custom dan linework terbaru dari resident artist kami.",
+    "featuredWorksViewAll": "Jelajahi Galeri Lengkap",
+    "artistsTitle": "RESIDENT ARTISTS",
+    "artistsSubtitle": "Seniman tato berpengalaman dengan karakter dan spesialisasi unik.",
+    "artistsViewAll": "Lihat Profil Seniman",
+    "contactCtaTitle": "SIAP DENGAN DESAIN TATO IMPIAN ANDA?",
+    "contactCtaSubtitle": "Diskusikan ide, ukuran, dan penempatan tato langsung dengan tim kami via WhatsApp.",
+    "contactCtaButton": "Konsultasi Gratis via WhatsApp"
+  },
+  "about": {
+    "title": "TENTANG BLUSTEREAST TATTOO",
+    "subtitle": "Studio tato custom profesional yang berlokasi di Denpasar Timur, Bali.",
+    "storyTitle": "Cerita Studio",
+    "storyBody": "Blustereast Tattoo Studio didirikan dengan komitmen menyajikan seni tato custom berkualitas tinggi. Setiap karya diproduksi dengan standar higienitas medis, jarum sekali pakai, dan tinta bersertifikasi internasional. Kami percaya tato adalah ekspresi pribadi yang abadi.",
+    "visionTitle": "Visi Kami",
+    "visionBody": "Menjadi studio tato custom rujukan di Bali yang dikenal akan presisi garis, kebersihan ruang, dan pengalaman klien yang aman dan nyaman.",
+    "missionTitle": "Misi Kami",
+    "missionBody": "1. Menyediakan konsultasi desain custom yang transparan dan ramah.\n2. Menerapkan protokol kebersihan dan sterilisasi ketat tanpa kompromi.\n3. Mengedukasi klien mengenai perawatan pasca-tato (aftercare) secara menyeluruh.",
+    "valuesTitle": "Nilai Utama Kami",
+    "valHygieneTitle": "Higienitas Medis",
+    "valHygieneDesc": "Jarum steril sekali pakai, plastik pelindung perlengkapan, dan disinfeksi ruangan rutin.",
+    "valComfortTitle": "Kenyamanan Klien",
+    "valComfortDesc": "Atmosphere studio tenang, ramah untuk pertama kali tato, dan transparan mengenai proses.",
+    "valCustomTitle": "Desain Original",
+    "valCustomDesc": "Tidak hanya meniru, kami menggambar ulang dan menyesuaikan desain sesuai anatomi Anda.",
+    "photosTitle": "Suasana Studio"
+  },
+  "artists": {
+    "title": "SENIMAN TATOTO RESIDENT",
+    "subtitle": "Setiap seniman membawa gaya dan ketelitian masing-masing.",
+    "specialties": "Spesialisasi",
+    "bio": "Profil & Gaya",
+    "viewGallery": "Lihat Karya Seniman Ini"
+  },
+  "services": {
+    "title": "LAYANAN & PERKIRAAN HARGA",
+    "subtitle": "Harga final ditentukan oleh ukuran presisi, detail garis, dan tingkat kesulitan penempatan.",
+    "startingFrom": "Mulai dari",
+    "priceNote": "*Harga di atas merupakan estimasi awal. Konsultasikan detail desain Anda untuk mendapatkan penawaran pasti.",
+    "faqTitle": "PERTANYAAN SERING DIAJUKAN (FAQ)",
+    "aftercareTitle": "PANDUAN PERAWATAN PASCA TATOTO (AFTERCARE)",
+    "aftercareIntro": "Perawatan yang benar memastikan warna tinta tetap tajam dan proses penyembuhan berjalan sempurna."
+  },
+  "gallery": {
+    "title": "GALERI KARYA & FLASH",
+    "subtitle": "Koleksi hasil karya tato dan sheet flash stencil studio.",
+    "filterAllStyle": "Semua Gaya",
+    "filterAllArtist": "Semua Seniman",
+    "artistLabel": "Seniman",
+    "styleLabel": "Gaya",
+    "viewDetail": "Lihat Detail",
+    "lightboxTitle": "Detail Karya",
+    "lightboxConsult": "Konsultasi Tato Serupa via WhatsApp"
+  },
+  "contact": {
+    "title": "KONTAK & LOKASI STUDIO",
+    "subtitle": "Kunjungi studio kami atau kirimkan formulir konsultasi di bawah ini.",
+    "addressTitle": "Alamat Studio",
+    "hoursTitle": "Jam Operasional",
+    "socialsTitle": "Media Sosial",
+    "mapTitle": "Peta Lokasi Studio",
+    "formTitle": "Formulir Konsultasi Tato",
+    "formName": "Nama Lengkap",
+    "formPhone": "Nomor WhatsApp / HP",
+    "formStyle": "Gaya Tato (misal: Fine Line, Blackwork)",
+    "formPlacement": "Penempatan (misal: Lengan Atas, Dada)",
+    "formSize": "Estimasi Ukuran (misal: 5x5 cm, Full Sleeve)",
+    "formMessage": "Pesan / Konsep Ide Tato",
+    "formSubmit": "Kirim Formulir Konsultasi",
+    "formSuccess": "Terima kasih! Formulir Anda telah terkirim. Tim kami akan segera menghubungi Anda.",
+    "formWhatsAppAlt": "Ingin respon lebih cepat? Langsung WhatsApp kami:"
+  },
+  "ageNotice": {
+    "title": "Pemberitahuan Usia 18+",
+    "message": "Studio kami hanya melayani klien berusia 18 tahun ke atas. Harap siapkan kartu identitas saat kunjungan.",
+    "dismiss": "Saya Mengerti (18+)"
+  },
+  "footer": {
+    "aboutText": "Studio tato custom profesional di Denpasar Timur, Bali. Khusus untuk klien berusia 18 tahun ke atas.",
+    "quickLinks": "Tautan Cepat",
+    "socialTitle": "Ikuti Kami",
+    "copyright": "© 2026 Blustereast Tattoo Studio. Hak Cipta Dilindungi."
+  }
+}
