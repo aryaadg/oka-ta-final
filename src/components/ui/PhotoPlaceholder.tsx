@@ -24,22 +24,30 @@ export function PhotoPlaceholder({
  auto: "",
  }[aspectRatio];
 
- // Match label to placeholder images in public/temp
+ // Match label to AI-generated photos in public/temp
  let src = "/temp/gallery-1.jpg";
- if (label.toLowerCase().includes("hero")) src = "/temp/hero-1.jpg";
- else if (label.toLowerCase().includes("budi")) src = "/temp/artist-1.jpg";
- else if (label.toLowerCase().includes("sari")) src = "/temp/artist-2.jpg";
- else if (label.toLowerCase().includes("wayan")) src = "/temp/artist-3.jpg";
- else if (label.toLowerCase().includes("interior")) src = "/temp/about-1.jpg";
- else if (label.toLowerCase().includes("process")) src = "/temp/about-2.jpg";
- else if (label.toLowerCase().includes("exterior")) src = "/temp/about-3.jpg";
- // Hash string to pick a random gallery image 1-12 based on the label text
+ const lbl = label.toLowerCase();
+ if (lbl.includes("hero")) src = "/temp/hero-1.jpg";
+ else if (lbl.includes("budi") || lbl.includes("needles")) src = "/temp/artist-1.jpg";
+ else if (lbl.includes("wayan")) src = "/temp/artist-2.jpg";
+ else if (lbl.includes("sari")) src = "/temp/artist-3.jpg";
+ else if (lbl.includes("interior") || lbl.includes("studio")) src = "/temp/about-1.jpg";
+ else if (lbl.includes("botanical") || lbl.includes("fine line") || lbl.includes("fineline") || lbl.includes("floral")) src = "/temp/gallery-1.jpg";
+ else if (lbl.includes("snake") || lbl.includes("blackwork") || lbl.includes("dragon")) src = "/temp/gallery-2.jpg";
+ else if (lbl.includes("portrait") || lbl.includes("realism") || lbl.includes("grey") || lbl.includes("sculpture")) src = "/temp/gallery-3.jpg";
+ else if (lbl.includes("geometric") || lbl.includes("mandala")) src = "/temp/gallery-4.jpg";
+ else if (lbl.includes("ornamental") || lbl.includes("spine")) src = "/temp/gallery-5.jpg";
+ else if (lbl.includes("tiger") || lbl.includes("wildlife")) src = "/temp/gallery-6.jpg";
+ else if (lbl.includes("script") || lbl.includes("lettering") || lbl.includes("minimalist")) src = "/temp/gallery-7.jpg";
+ else if (lbl.includes("traditional") || lbl.includes("bali")) src = "/temp/gallery-4.jpg";
+ else if (lbl.includes("mythological")) src = "/temp/gallery-2.jpg";
  else {
+   // Hash-based fallback for unknown labels
    let hash = 0;
    for (let i = 0; i < label.length; i++) {
      hash = label.charCodeAt(i) + ((hash << 5) - hash);
    }
-   const index = (Math.abs(hash) % 12) + 1;
+   const index = (Math.abs(hash) % 7) + 1;
    src = `/temp/gallery-${index}.jpg`;
  }
 
