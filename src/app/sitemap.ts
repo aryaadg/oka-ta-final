@@ -23,6 +23,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
  priority: 0.8,
  },
  {
+ url: `${baseUrl}/id/artists`,
+ lastModified: new Date(),
+ changeFrequency: "monthly",
+ priority: 0.8,
+ },
+ {
  url: `${baseUrl}/id/gallery`,
  lastModified: new Date(),
  changeFrequency: "daily",
@@ -43,6 +49,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
  // Adding english variants
  {
  url: `${baseUrl}/en/about`,
+ lastModified: new Date(),
+ changeFrequency: "monthly",
+ priority: 0.8,
+ },
+ {
+ url: `${baseUrl}/en/artists`,
  lastModified: new Date(),
  changeFrequency: "monthly",
  priority: 0.8,

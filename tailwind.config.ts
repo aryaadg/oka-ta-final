@@ -43,13 +43,19 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        // TEMA WARNA KHUSUS BRAND GYM
+        // TEMA WARNA KHUSUS BRAND GYM / STUDIO DARK & GOLD
         gym: {
           gold: "#f5c518",
           dark: "#0a0a0a",
           darkCard: "#111111",
-          darkBorder: "rgba(255,255,255,0.1)",
+          darkBorder: "rgba(255,255,255,0.12)",
         },
+        stencil: "#f5c518",
+        graphite: "#a1a1aa",
+        needle: "#ef4444",
+      },
+      maxWidth: {
+        container: "1200px",
       },
       borderRadius: {
         lg: "var(--radius)",

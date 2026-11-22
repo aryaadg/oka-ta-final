@@ -78,8 +78,8 @@ export const mockSiteSettings: SiteSettings = {
  maps_embed_url:
  "https://maps.google.com/maps?q=Jl.+Akasia+XVI+Denpasar+Timur+Bali&t=&z=15&ie=UTF8&iwloc=&output=embed",
  opening_hours: "10:00 - 20:00 WITA",
- instagram: "https://instagram.com/blustereast",
- tiktok: "https://tiktok.com/@blustereast",
+ instagram: "@blustereast_tattoostudio",
+ tiktok: "@blustereast_tattoostudio",
  about_id:
  "Blustereast Tattoo Studio adalah studio tato custom profesional di Denpasar Timur (Akasia XVI), Bali. Berdiri sejak 2018, kami berfokus pada hasil karya tato presisi tinggi, kebersihan medis, dan kepuasan klien. Lingkungan studio kami dirancang khusus agar Anda merasa santai, privat, dan percaya penuh pada karya seni yang diukir di kulit Anda.",
  about_en:
@@ -98,7 +98,7 @@ export const mockArtists: Artist[] = [
  {
  id: "artist-1",
  name: "Budi 'Needles'",
- photo_url: "",
+ photo_url: "/temp/artist-1.jpg",
  bio_id:
  "Berpengalaman 8 tahun dalam seni Fine Line, micro-realism, dan desain flora bertema botanik. Mengedepankan ketelitian garis super tipis dan ketahanan warna yang awet di iklim tropis.",
  bio_en:
@@ -110,7 +110,7 @@ export const mockArtists: Artist[] = [
  {
  id: "artist-2",
  name: "Wayan Tinta",
- photo_url: "",
+ photo_url: "/temp/artist-2.jpg",
  bio_id:
  "Spesialis Blackwork kontras tinggi, shading geometri, dan ornamen tradisional Bali. Berpengalaman menangani tato ukuran medium hingga proyek full sleeve yang kompleks.",
  bio_en:
@@ -122,7 +122,7 @@ export const mockArtists: Artist[] = [
  {
  id: "artist-3",
  name: "Sari Linework",
- photo_url: "",
+ photo_url: "/temp/artist-3.jpg",
  bio_id:
  "Lulusan seni rupa yang kini ahli dalam Realism portrait, kontur hitam putih, dan ahli me-retouch atau cover-up tato lama dengan pendekatan visual modern.",
  bio_en:
@@ -211,7 +211,7 @@ export const mockGalleryItems: GalleryItem[] = [
  id: "work-1",
  title: "Botanical Fine Line Stencil",
  style: "Fine Line",
- image_url: "",
+ image_url: "/temp/gallery-1.jpg",
  artist_id: "artist-1",
  artist_name: "Budi 'Needles'",
  is_featured: true,
@@ -223,7 +223,7 @@ export const mockGalleryItems: GalleryItem[] = [
  id: "work-2",
  title: "Geometric Snake Blackwork",
  style: "Blackwork",
- image_url: "",
+ image_url: "/temp/gallery-2.jpg",
  artist_id: "artist-2",
  artist_name: "Wayan Tinta",
  is_featured: true,
@@ -235,7 +235,7 @@ export const mockGalleryItems: GalleryItem[] = [
  id: "work-3",
  title: "Sculpture Shading Study",
  style: "Realism",
- image_url: "",
+ image_url: "/temp/gallery-3.jpg",
  artist_id: "artist-3",
  artist_name: "Sari Linework",
  is_featured: true,
@@ -247,7 +247,7 @@ export const mockGalleryItems: GalleryItem[] = [
  id: "work-4",
  title: "Ornamental Spine Linework",
  style: "Ornamental",
- image_url: "",
+ image_url: "/temp/gallery-5.jpg",
  artist_id: "artist-1",
  artist_name: "Budi 'Needles'",
  is_featured: true,
@@ -259,7 +259,7 @@ export const mockGalleryItems: GalleryItem[] = [
  id: "work-5",
  title: "Mythological Dragon Flash",
  style: "Blackwork",
- image_url: "",
+ image_url: "/temp/gallery-2.jpg",
  artist_id: "artist-2",
  artist_name: "Wayan Tinta",
  is_featured: true,
@@ -271,7 +271,7 @@ export const mockGalleryItems: GalleryItem[] = [
  id: "work-6",
  title: "Minimalist Script Linework",
  style: "Fine Line",
- image_url: "",
+ image_url: "/temp/gallery-7.jpg",
  artist_id: "artist-1",
  artist_name: "Budi 'Needles'",
  is_featured: true,
@@ -283,7 +283,7 @@ export const mockGalleryItems: GalleryItem[] = [
  id: "work-7",
  title: "Traditional Bali Stencil Motif",
  style: "Ornamental",
- image_url: "",
+ image_url: "/temp/gallery-4.jpg",
  artist_id: "artist-2",
  artist_name: "Wayan Tinta",
  is_featured: false,
@@ -295,7 +295,7 @@ export const mockGalleryItems: GalleryItem[] = [
  id: "work-8",
  title: "Tiger Portrait Shading",
  style: "Realism",
- image_url: "",
+ image_url: "/temp/gallery-6.jpg",
  artist_id: "artist-3",
  artist_name: "Sari Linework",
  is_featured: false,

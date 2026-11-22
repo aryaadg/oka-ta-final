@@ -1,49 +1,152 @@
+import { cookies } from "next/headers";
 import { createClient } from "../supabase/server";
-import { mockSiteSettings, mockArtists, mockServices, mockGalleryItems } from "../mock";
+import { isSupabaseConfigured, readLocalStore } from "./store";
+import { SiteSettings, Artist, Service, GalleryItem } from "../mock";
 
-export async function getSiteSettings() {
- const supabase = await createClient();
- const { data } = await supabase.from("site_settings").select("*").eq("id", 1).maybeSingle();
- return data || mockSiteSettings;
+async function markDynamic() {
+  try {
+    await cookies();
+  } catch {
+    // Ignore outside request context
+  }
 }
 
-export async function getArtists() {
- const supabase = await createClient();
- const { data } = await supabase.from("artists").select("*").order("sort_order", { ascending: true });
- return (data && data.length > 0) ? data : mockArtists;
+export type EnrichedGalleryItem = GalleryItem & {
+  artist?: { id: string; name: string } | null;
+};
+
+function enrichGalleryItems(
+  items: GalleryItem[],
+  artists: Artist[]
+): EnrichedGalleryItem[] {
+  const artistMap = new Map(artists.map((a) => [a.id, a]));
+  return items.map((item) => {
+    const found = artistMap.get(item.artist_id);
+    const artistName = found?.name || item.artist_name || "Studio Artist";
+    return {
+      ...item,
+      artist_name: artistName,
+      aspect_ratio: item.aspect_ratio || "4:5",
+      artist: {
+        id: item.artist_id,
+        name: artistName,
+      },
+    };
+  });
 }
 
-export async function getServices() {
- const supabase = await createClient();
- const { data } = await supabase.from("services").select("*").eq("is_active", true).order("sort_order", { ascending: true });
- return (data && data.length > 0) ? data : mockServices;
+export async function getSiteSettings(): Promise<SiteSettings> {
+  await markDynamic();
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      const { data } = await supabase
+        .from("site_settings")
+        .select("*")
+        .eq("id", 1)
+        .maybeSingle();
+      if (data) return data as SiteSettings;
+    } catch {
+      // Fallback to local store
+    }
+  }
+  return readLocalStore().siteSettings;
 }
 
-export async function getGalleryItems(artistId?: string) {
- const supabase = await createClient();
- let query = supabase.from("gallery_items").select(`
- *,
- artist:artists(id, name)
- `).order("sort_order", { ascending: true });
-
- if (artistId) {
- query = query.eq("artist_id", artistId);
- }
-
- const { data } = await query;
- if (data && data.length > 0) return data;
- 
- return artistId 
-   ? mockGalleryItems.filter((item) => item.artist_id === artistId) 
-   : mockGalleryItems;
+export async function getArtists(): Promise<Artist[]> {
+  await markDynamic();
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      const { data } = await supabase
+        .from("artists")
+        .select("*")
+        .order("sort_order", { ascending: true });
+      if (data && data.length > 0) return data as Artist[];
+    } catch {
+      // Fallback to local store
+    }
+  }
+  return [...readLocalStore().artists].sort((a, b) => a.sort_order - b.sort_order);
 }
 
-export async function getFeaturedGalleryItems() {
- const supabase = await createClient();
- const { data } = await supabase.from("gallery_items").select(`
- *,
- artist:artists(id, name)
- `).eq("is_featured", true).order("sort_order", { ascending: true }).limit(6);
- 
- return (data && data.length > 0) ? data : mockGalleryItems.filter(item => item.is_featured).slice(0, 6);
+export async function getServices(includeInactive = false): Promise<Service[]> {
+  await markDynamic();
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      let query = supabase
+        .from("services")
+        .select("*")
+        .order("sort_order", { ascending: true });
+      if (!includeInactive) {
+        query = query.eq("is_active", true);
+      }
+      const { data } = await query;
+      if (data && data.length > 0) {
+        return data.map((s) => ({
+          ...s,
+          starting_price:
+            typeof s.starting_price === "number"
+              ? s.starting_price.toLocaleString("id-ID")
+              : String(s.starting_price || ""),
+        })) as Service[];
+      }
+    } catch {
+      // Fallback to local store
+    }
+  }
+  const all = [...readLocalStore().services].sort(
+    (a, b) => a.sort_order - b.sort_order
+  );
+  return includeInactive ? all : all.filter((s) => s.is_active);
+}
+
+export async function getGalleryItems(
+  artistId?: string
+): Promise<EnrichedGalleryItem[]> {
+  await markDynamic();
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      let query = supabase
+        .from("gallery_items")
+        .select(
+          `
+          *,
+          artist:artists(id, name)
+        `
+        )
+        .order("sort_order", { ascending: true });
+
+      if (artistId) {
+        query = query.eq("artist_id", artistId);
+      }
+
+      const { data } = await query;
+      if (data && data.length > 0) {
+        return data.map((item) => ({
+          ...item,
+          aspect_ratio: item.aspect_ratio || "4:5",
+          artist_name: item.artist?.name || item.artist_name || "Studio Artist",
+        })) as EnrichedGalleryItem[];
+      }
+    } catch {
+      // Fallback to local store
+    }
+  }
+
+  const store = readLocalStore();
+  const sorted = [...store.galleryItems].sort(
+    (a, b) => a.sort_order - b.sort_order
+  );
+  const filtered = artistId
+    ? sorted.filter((item) => item.artist_id === artistId)
+    : sorted;
+  return enrichGalleryItems(filtered, store.artists);
+}
+
+export async function getFeaturedGalleryItems(): Promise<EnrichedGalleryItem[]> {
+  const all = await getGalleryItems();
+  return all.filter((item) => item.is_featured).slice(0, 6);
 }
