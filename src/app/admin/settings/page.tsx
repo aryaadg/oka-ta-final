@@ -10,17 +10,58 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
-import { CheckCircle2, Save } from "lucide-react";
+import { Badge } from "@/components/ui/Badge";
+import {
+  CheckCircle2,
+  Save,
+  Database,
+  RefreshCw,
+  ExternalLink,
+} from "lucide-react";
+
+interface KeepAliveStatus {
+  ok: boolean;
+  mode: string;
+  message: string;
+  projectRef: string | null;
+  dashboardUrl: string;
+  accountHint: string;
+  timestamp: string;
+}
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<SiteSettings>(mockSiteSettings);
   const [notification, setNotification] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
+  const [dbStatus, setDbStatus] = useState<KeepAliveStatus | null>(null);
+  const [pinging, setPinging] = useState(false);
+
+  const checkKeepAlive = async (showToast = false) => {
+    setPinging(true);
+    try {
+      const res = await fetch("/api/keep-alive", { cache: "no-store" });
+      const data = (await res.json()) as KeepAliveStatus;
+      setDbStatus(data);
+      if (showToast) {
+        setNotification(data.message);
+        setTimeout(() => setNotification(null), 4000);
+      }
+    } catch {
+      if (showToast) {
+        setNotification("Gagal melakukan ping keep-alive.");
+        setTimeout(() => setNotification(null), 3500);
+      }
+    } finally {
+      setPinging(false);
+    }
+  };
+
   useEffect(() => {
     fetchAdminSettingsAction().then((data) => {
       if (data) setSettings(data);
     });
+    checkKeepAlive(false);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,7 +89,7 @@ export default function AdminSettingsPage() {
               PENGATURAN STUDIO & KONTAK
             </h1>
             <p className="text-sm text-graphite font-mono">
-              Kelola nomor WhatsApp, alamat, jam operasional, dan profil studio.
+              Kelola nomor WhatsApp, alamat, jam operasional, profil studio, dan status database.
             </p>
           </div>
         </div>
@@ -60,6 +101,98 @@ export default function AdminSettingsPage() {
             <span className="text-sm font-semibold">{notification}</span>
           </div>
         )}
+
+        {/* Supabase Keep-Alive & Account Info Panel */}
+        <div className="bg-gym-darkCard p-6 border-2 border-gym-gold flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gym-darkBorder pb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gym-gold text-gym-dark flex items-center justify-center shrink-0">
+                <Database className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="font-sans font-extrabold text-xl text-foreground">
+                  STATUS DATABASE & AUTO KEEP-ALIVE SUPABASE
+                </h2>
+                <p className="text-xs font-mono text-graphite">
+                  Mencegah Supabase Free Tier auto-pause & pelacak akun project.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => checkKeepAlive(true)}
+                disabled={pinging}
+                className="gap-1.5"
+              >
+                <RefreshCw
+                  className={`w-4 h-4 ${pinging ? "animate-spin" : ""}`}
+                />
+                <span>{pinging ? "Melakukan Ping..." : "Ping Keep-Alive"}</span>
+              </Button>
+
+              {dbStatus?.dashboardUrl && (
+                <a
+                  href={dbStatus.dashboardUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Button
+                    type="button"
+                    variant="stencil"
+                    size="sm"
+                    className="gap-1.5"
+                  >
+                    <span>Buka Dashboard Supabase</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </Button>
+                </a>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+            <div className="p-3 bg-background/60 border border-gym-darkBorder">
+              <span className="text-xs font-mono text-graphite block mb-1">
+                MODE PENYIMPANAN AKTIF
+              </span>
+              <Badge
+                variant={
+                  dbStatus?.mode === "supabase" ? "done" : "stencil"
+                }
+              >
+                {dbStatus?.mode === "supabase"
+                  ? "SUPABASE CLOUD AKTIF"
+                  : "PENYIMPANAN LOKAL (AUTO-FALLBACK)"}
+              </Badge>
+            </div>
+
+            <div className="p-3 bg-background/60 border border-gym-darkBorder">
+              <span className="text-xs font-mono text-graphite block mb-1">
+                PROJECT REF ID SUPABASE
+              </span>
+              <span className="font-mono font-bold text-foreground">
+                {dbStatus?.projectRef || "Belum diisi di .env.local"}
+              </span>
+            </div>
+
+            <div className="p-3 bg-background/60 border border-gym-darkBorder">
+              <span className="text-xs font-mono text-graphite block mb-1">
+                PENGINGAT AKUN SUPABASE
+              </span>
+              <span className="font-mono text-xs text-gym-gold">
+                {dbStatus?.accountHint || "Lihat .env.local / .env.example"}
+              </span>
+            </div>
+          </div>
+
+          <p className="text-xs text-graphite font-mono">
+            Endpoint Keep-Alive: <code className="text-gym-gold">/api/keep-alive</code> (Terjadwal otomatis via Vercel Cron & GitHub Actions agar project tidak pernah pause).
+          </p>
+        </div>
 
         {/* Settings Form */}
         <form

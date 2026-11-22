@@ -1,0 +1,33 @@
+name: Supabase Keep-Alive Ping
+
+on:
+  schedule:
+    # Berjalan otomatis setiap 3 hari pada jam 04:00 UTC agar Supabase Free Tier tidak pernah auto-pause
+    - cron: "0 4 */3 * *"
+  workflow_dispatch:
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API atau Endpoint Keep-Alive Website
+        env:
+          SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          APP_URL: ${{ secrets.APP_URL }}
+        run: |
+          if [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_KEY" ]; then
+            echo "Melakukan ping langsung ke Supabase REST API..."
+            curl -sS "${SUPABASE_URL}/rest/v1/site_settings?select=id&limit=1" \
+              -H "apikey: ${SUPABASE_KEY}" \
+              -H "Authorization: Bearer ${SUPABASE_KEY}"
+            echo ""
+            echo "Ping Supabase berhasil!"
+          elif [ -n "$APP_URL" ]; then
+            echo "Melakukan ping ke ${APP_URL}/api/keep-alive..."
+            curl -sS "${APP_URL}/api/keep-alive"
+            echo ""
+            echo "Ping Keep-Alive endpoint berhasil!"
+          else
+            echo "Catatan: Tambahkan NEXT_PUBLIC_SUPABASE_URL & NEXT_PUBLIC_SUPABASE_ANON_KEY (atau APP_URL) di GitHub Repository Secrets agar ping berjalan ke project Supabase Anda."
+          fi
