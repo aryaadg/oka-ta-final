@@ -3,6 +3,10 @@ import { createClient } from "../supabase/server";
 import { isSupabaseConfigured, readLocalStore } from "./store";
 import { SiteSettings, Artist, Service, GalleryItem } from "../mock";
 
+export type EnrichedGalleryItem = GalleryItem & {
+  artist?: { id: string; name: string } | null;
+};
+
 async function markDynamic() {
   try {
     await cookies();
@@ -10,10 +14,6 @@ async function markDynamic() {
     // Ignore outside request context
   }
 }
-
-export type EnrichedGalleryItem = GalleryItem & {
-  artist?: { id: string; name: string } | null;
-};
 
 function enrichGalleryItems(
   items: GalleryItem[],
@@ -35,9 +35,39 @@ function enrichGalleryItems(
   });
 }
 
+function isPlaceholderSettings(data: Partial<SiteSettings> | null): boolean {
+  if (!data) return true;
+  return (
+    data.whatsapp === "[WHATSAPP_NUMBER]" ||
+    (typeof data.address === "string" &&
+      data.address.includes("[STUDIO_ADDRESS]"))
+  );
+}
+
+function isPlaceholderArtists(data: Artist[] | null): boolean {
+  if (!data || data.length === 0) return true;
+  return data.length === 1 && data[0].name === "[ARTIST_NAME]";
+}
+
+function isPlaceholderServices(data: unknown[] | null): boolean {
+  if (!data || data.length === 0) return true;
+  const first = data[0] as { name_id?: string; description_id?: string };
+  return (
+    data.length === 1 &&
+    first.name_id === "Tato Custom" &&
+    first.description_id === "Desain khusus"
+  );
+}
+
+function isPlaceholderGallery(data: GalleryItem[] | null): boolean {
+  if (!data || data.length === 0) return true;
+  return data.length === 1 && data[0].title === "Placeholder Work";
+}
+
 export async function getSiteSettings(): Promise<SiteSettings> {
   await markDynamic();
-  if (isSupabaseConfigured()) {
+  const store = readLocalStore();
+  if (isSupabaseConfigured() && !store.preferLocalFallback) {
     try {
       const supabase = await createClient();
       const { data } = await supabase
@@ -45,34 +75,40 @@ export async function getSiteSettings(): Promise<SiteSettings> {
         .select("*")
         .eq("id", 1)
         .maybeSingle();
-      if (data) return data as SiteSettings;
+      if (data && !isPlaceholderSettings(data)) {
+        return data as SiteSettings;
+      }
     } catch {
       // Fallback to local store
     }
   }
-  return readLocalStore().siteSettings;
+  return store.siteSettings;
 }
 
 export async function getArtists(): Promise<Artist[]> {
   await markDynamic();
-  if (isSupabaseConfigured()) {
+  const store = readLocalStore();
+  if (isSupabaseConfigured() && !store.preferLocalFallback) {
     try {
       const supabase = await createClient();
       const { data } = await supabase
         .from("artists")
         .select("*")
         .order("sort_order", { ascending: true });
-      if (data && data.length > 0) return data as Artist[];
+      if (data && !isPlaceholderArtists(data as Artist[])) {
+        return data as Artist[];
+      }
     } catch {
       // Fallback to local store
     }
   }
-  return [...readLocalStore().artists].sort((a, b) => a.sort_order - b.sort_order);
+  return [...store.artists].sort((a, b) => a.sort_order - b.sort_order);
 }
 
 export async function getServices(includeInactive = false): Promise<Service[]> {
   await markDynamic();
-  if (isSupabaseConfigured()) {
+  const store = readLocalStore();
+  if (isSupabaseConfigured() && !store.preferLocalFallback) {
     try {
       const supabase = await createClient();
       let query = supabase
@@ -83,7 +119,7 @@ export async function getServices(includeInactive = false): Promise<Service[]> {
         query = query.eq("is_active", true);
       }
       const { data } = await query;
-      if (data && data.length > 0) {
+      if (data && !isPlaceholderServices(data)) {
         return data.map((s) => ({
           ...s,
           starting_price:
@@ -96,9 +132,7 @@ export async function getServices(includeInactive = false): Promise<Service[]> {
       // Fallback to local store
     }
   }
-  const all = [...readLocalStore().services].sort(
-    (a, b) => a.sort_order - b.sort_order
-  );
+  const all = [...store.services].sort((a, b) => a.sort_order - b.sort_order);
   return includeInactive ? all : all.filter((s) => s.is_active);
 }
 
@@ -106,7 +140,8 @@ export async function getGalleryItems(
   artistId?: string
 ): Promise<EnrichedGalleryItem[]> {
   await markDynamic();
-  if (isSupabaseConfigured()) {
+  const store = readLocalStore();
+  if (isSupabaseConfigured() && !store.preferLocalFallback) {
     try {
       const supabase = await createClient();
       let query = supabase
@@ -124,7 +159,7 @@ export async function getGalleryItems(
       }
 
       const { data } = await query;
-      if (data && data.length > 0) {
+      if (data && !isPlaceholderGallery(data as GalleryItem[])) {
         return data.map((item) => ({
           ...item,
           aspect_ratio: item.aspect_ratio || "4:5",
@@ -136,7 +171,6 @@ export async function getGalleryItems(
     }
   }
 
-  const store = readLocalStore();
   const sorted = [...store.galleryItems].sort(
     (a, b) => a.sort_order - b.sort_order
   );

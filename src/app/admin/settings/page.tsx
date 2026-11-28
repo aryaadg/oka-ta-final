@@ -6,6 +6,7 @@ import { mockSiteSettings, SiteSettings } from "@/lib/mock";
 import {
   fetchAdminSettingsAction,
   saveSiteSettingsAction,
+  syncLocalToSupabaseAction,
 } from "@/lib/data/actions";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
@@ -17,6 +18,7 @@ import {
   Database,
   RefreshCw,
   ExternalLink,
+  CloudUpload,
 } from "lucide-react";
 
 interface KeepAliveStatus {
@@ -36,6 +38,7 @@ export default function AdminSettingsPage() {
 
   const [dbStatus, setDbStatus] = useState<KeepAliveStatus | null>(null);
   const [pinging, setPinging] = useState(false);
+  const [syncing, setSyncing] = useState(false);
 
   const checkKeepAlive = async (showToast = false) => {
     setPinging(true);
@@ -54,6 +57,18 @@ export default function AdminSettingsPage() {
       }
     } finally {
       setPinging(false);
+    }
+  };
+
+  const handleSyncToSupabase = async () => {
+    setSyncing(true);
+    try {
+      const res = await syncLocalToSupabaseAction();
+      setNotification(res.message);
+      setTimeout(() => setNotification(null), 5000);
+      await checkKeepAlive(false);
+    } finally {
+      setSyncing(false);
     }
   };
 
@@ -134,6 +149,20 @@ export default function AdminSettingsPage() {
                 <span>{pinging ? "Melakukan Ping..." : "Ping Keep-Alive"}</span>
               </Button>
 
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleSyncToSupabase}
+                disabled={syncing}
+                className="gap-1.5"
+              >
+                <CloudUpload className="w-4 h-4" />
+                <span>
+                  {syncing ? "Menyinkronkan..." : "Sinkronkan Data ke Supabase"}
+                </span>
+              </Button>
+
               {dbStatus?.dashboardUrl && (
                 <a
                   href={dbStatus.dashboardUrl}
@@ -160,9 +189,7 @@ export default function AdminSettingsPage() {
                 MODE PENYIMPANAN AKTIF
               </span>
               <Badge
-                variant={
-                  dbStatus?.mode === "supabase" ? "done" : "stencil"
-                }
+                variant={dbStatus?.mode === "supabase" ? "done" : "stencil"}
               >
                 {dbStatus?.mode === "supabase"
                   ? "SUPABASE CLOUD AKTIF"

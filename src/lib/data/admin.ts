@@ -15,20 +15,21 @@ export async function getAdminInquiries(): Promise<Inquiry[]> {
   } catch {
     // Ignore outside request context
   }
-  if (isSupabaseConfigured()) {
+  const store = readLocalStore();
+  if (isSupabaseConfigured() && !store.preferLocalFallback) {
     try {
       const supabase = await createClient();
       const { data } = await supabase
         .from("inquiries")
         .select("*")
         .order("created_at", { ascending: false });
-      if (data) return data as Inquiry[];
+      if (data && data.length > 0) return data as Inquiry[];
     } catch {
       // Fallback to local store
     }
   }
 
-  return [...readLocalStore().inquiries].sort(
+  return [...store.inquiries].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 }

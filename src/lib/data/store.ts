@@ -19,6 +19,7 @@ export interface LocalStoreData {
   services: Service[];
   galleryItems: GalleryItem[];
   inquiries: Inquiry[];
+  preferLocalFallback?: boolean;
 }
 
 const DATA_DIR = path.join(process.cwd(), ".data");
@@ -33,6 +34,7 @@ function createInitialStore(): LocalStoreData {
     services: mockServices.map((s) => ({ ...s })),
     galleryItems: mockGalleryItems.map((g) => ({ ...g })),
     inquiries: mockInquiries.map((i) => ({ ...i })),
+    preferLocalFallback: false,
   };
 }
 
@@ -67,6 +69,7 @@ export function readLocalStore(): LocalStoreData {
         inquiries: Array.isArray(parsed.inquiries)
           ? parsed.inquiries
           : initial.inquiries,
+        preferLocalFallback: Boolean(parsed.preferLocalFallback),
       };
       return memoryStore;
     }
